@@ -9,18 +9,19 @@
 <body>
   <div class="container">
     <p>
-      <label for="new-task">Add Item</label><input id="new-task" type="text"><button id="btn-new-todo">Add</button>
+      <label for="new-task" id="new-task-label">Add Item</label><input id="new-task" type="text"><button id="btn-new-todo">Add</button>
     </p>
-
+    <b for="completed-all">All To Completed</b>
+    <input type="checkbox" id="completed-all" />
     <h3>Todo</h3>
     <ul id="incomplete-tasks">
       
     </ul>
-
+    
     <h3>Completed</h3>
+    
     <ul id="completed-tasks">
-    </ul>
-    <h3>Edit</h3>
+    </ul>    
     <div id="edit"></div>
   </div>
 
