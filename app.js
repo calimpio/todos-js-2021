@@ -1,58 +1,56 @@
 //todo-module
 (() => {
     let lastIndex = 0
-    const input = document.getElementById('new-task');
-    const btn = document.getElementById('btn-new-todo');
+    const inptNewTodo = document.getElementById('new-task');
+    const btnNewTodo = document.getElementById('btn-new-todo');
     const todosCont = document.getElementById("incomplete-tasks");
     const completedCont = document.getElementById("completed-tasks");
-    const edit = document.getElementById("edit");
-    const label = document.getElementById('new-task-label');
-    const allToComplete = document.getElementById('completed-all');
+    const editCont = document.getElementById("edit");
+    const lbNewTodo = document.getElementById('new-task-label');
+    const cbAllToComplete = document.getElementById('completed-all');
 
     const todos = [
 
     ];
 
-    allToComplete.onclick = () => {
-        todos.forEach(todo => todo.completado = !todo.completado);
-        updateComponentTodos();
+    cbAllToComplete.onclick = () => {
+        todos.forEach(todo => todo.completado = cbAllToComplete.checked);
+        renderTodos();
     }
 
     const taskRequired = (isRequired) => {
         if (isRequired) {
-            label.textContent = "Add Task Required *";
-            label.style.color = input.style.borderBlockColor = "red";
+            lbNewTodo.textContent = "Add Task Required *";
+            lbNewTodo.style.color = inptNewTodo.style.borderBlockColor = "red";
         } else {
-            label.textContent = "Add Task";
-            label.style.color = input.style.borderBlockColor = "black";
+            lbNewTodo.textContent = "Add Task";
+            lbNewTodo.style.color = inptNewTodo.style.borderBlockColor = "black";
         }
     }
 
-    const createToDo = () => {
-        if (input.value) {
+    btnNewTodo.onclick = () => {
+        if (inptNewTodo.value) {
             todos.push({
                 id: lastIndex++,
-                todo: input.value,
+                todo: inptNewTodo.value,
                 completado: false,
             })
             taskRequired(false);
-            updateComponentTodos();
+            renderTodos();
         } else {
             taskRequired(true);
         }
     }
 
-    input.oninput = () => {
-        if (input.value) {
+    inptNewTodo.oninput = () => {
+        if (inptNewTodo.value) {
             taskRequired(false);
         } else {
             taskRequired(true);
         }
-    }
+    }     
 
-    btn.onclick = createToDo;
-
-    const updateComponentTodos = () => {
+    const renderTodos = () => {
         const multiRenderTodo = todos.reduce((ac, todo, key) => {
             const li =
                 `<li>
@@ -76,23 +74,23 @@
         }, { todos: "", completado: "" });
         todosCont.innerHTML = multiRenderTodo.todos;
         completedCont.innerHTML = multiRenderTodo.completado;
-        edit.innerHTML = "";
+        editCont.innerHTML = "";
     }
 
     const changeStateTodo = (todo) => () => {
         todo.completado = !todo.completado;
-        updateComponentTodos();
+        renderTodos();
     }
 
     const deleteTodo = (todo) => () => {
         const i = todos.indexOf(todo);
         todos.splice(i, 1);
         if (!todos.length) lastIndex = 0;
-        updateComponentTodos();
+        renderTodos();
     }
 
     const editTodo = (todo) => () => {
-        edit.innerHTML = ` 
+        editCont.innerHTML = ` 
             <h3>Edit</h3>           
             <input id="input-todo-edit" type="text" value="${todo.todo}"/>
             <button id="btn-todo-save">Save</button>
@@ -107,9 +105,9 @@
         }
         btnsave.onclick = () => {
             todo.todo = input.value;
-            updateComponentTodos();
+            renderTodos();
         }
     }
 
-    updateComponentTodos();
+    renderTodos();
 })();
